@@ -47,8 +47,8 @@ The following sections contain the pure configuration commands deployed across t
 
 ### 💻 1. ROUTER DEV (Top Left)
 **Role:** Handles the Full Stack Developer department and initiates the OSPF Ring.
-*   **VLSM Efficiency:** The Serial interfaces use a `/30` Subnet Mask (`255.255.255.252`) which strictly allocates only 2 usable IPs per link, eliminating IP wastage on the WAN connections.
-*   **OSPF Precision:** The `network` command utilizes exact Wildcard Masks (`0.0.0.3` for WAN and `0.0.0.255` for LAN) to prevent OSPF from advertising incorrect subnets.
+**VLSM Efficiency:** The Serial interfaces use a `/30` Subnet Mask (`255.255.255.252`) which strictly allocates only 2 usable IPs per link, eliminating IP wastage on the WAN connections.
+**OSPF Precision:** The `network` command utilizes exact Wildcard Masks (`0.0.0.3` for WAN and `0.0.0.255` for LAN) to prevent OSPF from advertising incorrect subnets.
 
 ```text
 ! --- DHCP POOL CONFIGURATION ---
@@ -86,8 +86,8 @@ router ospf 15
 ### 📞 2. ROUTER CS (Bottom Center)
 
 **Role:** The most complex node in the topology. Acts as the PBX Server (Cisco CallManager Express) while also routing Data via a Router-on-a-Stick setup.
-*   **Router-on-a-Stick:** Physical interface `FastEthernet0/0` is logically divided into sub-interfaces (`.20` and `.50`) using `802.1Q` encapsulation. This securely isolates the Voice traffic from the Data traffic to prevent broadcast storms.
-*   **DHCP Option 150:** This parameter directs the IP Phones to the router's IP address to download their firmware and directory configurations via TFTP.
+**Router-on-a-Stick:** Physical interface `FastEthernet0/0` is logically divided into sub-interfaces (`.20` and `.50`) using `802.1Q` encapsulation. This securely isolates the Voice traffic from the Data traffic to prevent broadcast storms.
+**DHCP Option 150:** This parameter directs the IP Phones to the router's IP address to download their firmware and directory configurations via TFTP.
 
 ```text
 ! --- DHCP POOLS (DATA & VOICE) ---
@@ -145,12 +145,12 @@ ephone-dn 2
  number 102
 ephone-dn 3
  number 103
-
+```
 <br>
 
 ### 📊 3. ROUTER DATA (Top Right)
 **Role:** Handles the Data Scientist department and closes the redundant OSPF Ring architecture.
-*   **High Availability:** By connecting Router DATA back to Router DEV, the network forms a closed ring. If the `DEV ↔ CS` link fails, OSPF will seamlessly recalculate the Dijkstra Shortest Path Tree and reroute traffic through this DATA router to prevent downtime.
+**High Availability:** By connecting Router DATA back to Router DEV, the network forms a closed ring. If the `DEV ↔ CS` link fails, OSPF will seamlessly recalculate the Dijkstra Shortest Path Tree and reroute traffic through this DATA router to prevent downtime.
 
 ```text
 ! --- DHCP POOL CONFIGURATION ---
@@ -186,10 +186,9 @@ router ospf 15
 ---
 
 ## 🚀 How to Run the Simulation
-1. Clone this repository: `git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git`
-2. Open the `.pkt` file using **Cisco Packet Tracer**.
-3. Wait approximately 15-30 seconds for Spanning Tree Protocol (STP) convergence and OSPF Adjacency establishment.
-4. **Verification:**
+1. Open the `.pkt` file using **Cisco Packet Tracer**.
+2. Wait approximately 15-30 seconds for Spanning Tree Protocol (STP) convergence and OSPF Adjacency establishment.
+3. **Verification:**
    - Open a PC terminal and run `ping 192.168.30.x` to test inter-departmental routing.
    - Open the GUI of two IP Phones and dial the registered extension (e.g., `101` to `102`).
    - Run `show ip route` or `show ip ospf neighbor` in the Router CLI to verify dynamic routing tables.
