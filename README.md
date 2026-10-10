@@ -47,7 +47,9 @@ The following sections contain the pure configuration commands deployed across t
 
 ### 💻 1. ROUTER DEV (Top Left)
 **Role:** Handles the Full Stack Developer department and initiates the OSPF Ring.
+
 **VLSM Efficiency:** The Serial interfaces use a `/30` Subnet Mask (`255.255.255.252`) which strictly allocates only 2 usable IPs per link, eliminating IP wastage on the WAN connections.
+
 **OSPF Precision:** The `network` command utilizes exact Wildcard Masks (`0.0.0.3` for WAN and `0.0.0.255` for LAN) to prevent OSPF from advertising incorrect subnets.
 
 ```text
@@ -86,7 +88,9 @@ router ospf 15
 ### 📞 2. ROUTER CS (Bottom Center)
 
 **Role:** The most complex node in the topology. Acts as the PBX Server (Cisco CallManager Express) while also routing Data via a Router-on-a-Stick setup.
+
 **Router-on-a-Stick:** Physical interface `FastEthernet0/0` is logically divided into sub-interfaces (`.20` and `.50`) using `802.1Q` encapsulation. This securely isolates the Voice traffic from the Data traffic to prevent broadcast storms.
+
 **DHCP Option 150:** This parameter directs the IP Phones to the router's IP address to download their firmware and directory configurations via TFTP.
 
 ```text
@@ -149,8 +153,8 @@ ephone-dn 3
 <br>
 
 ### 📊 3. ROUTER DATA (Top Right)
-**Role:** Handles the Data Scientist department and closes the redundant OSPF Ring architecture.
-**High Availability:** By connecting Router DATA back to Router DEV, the network forms a closed ring. If the `DEV ↔ CS` link fails, OSPF will seamlessly recalculate the Dijkstra Shortest Path Tree and reroute traffic through this DATA router to prevent downtime.
+**Role:** Handles the Data Scientist department and closes the redundant OSPF architecture.
+
 
 ```text
 ! --- DHCP POOL CONFIGURATION ---
