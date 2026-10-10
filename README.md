@@ -84,10 +84,12 @@ router ospf 15
 <br>
 
 ### 📞 2. ROUTER CS (Bottom Center)
+
 **Role:** The most complex node in the topology. Acts as the PBX Server (Cisco CallManager Express) while also routing Data via a Router-on-a-Stick setup.
 *   **Router-on-a-Stick:** Physical interface `FastEthernet0/0` is logically divided into sub-interfaces (`.20` and `.50`) using `802.1Q` encapsulation. This securely isolates the Voice traffic from the Data traffic to prevent broadcast storms.
 *   **DHCP Option 150:** This parameter directs the IP Phones to the router's IP address to download their firmware and directory configurations via TFTP.
 
+```text
 ! --- DHCP POOLS (DATA & VOICE) ---
 ip dhcp pool VOICE
  network 192.168.50.0 255.255.255.0
