@@ -13,7 +13,7 @@
 <br />
 
 ## 📸 Network Topology Diagram
-> **[🖼️ INSERT YOUR TOPOLOGY SCREENSHOT HERE]**
+🖼️
 <img width="894" height="363" alt="{64A8C974-07CA-42CD-89F5-009545F2531B}" src="https://github.com/user-attachments/assets/433ead00-ceee-4d13-a705-bd2aa1c009fd" />
 
 
